@@ -32,8 +32,9 @@ def find_closest_x(grid):
     min_distance = float('inf')
     for (x, y), v in grid.items():
         if v == 2:
-            if abs(x) + abs(y) < min_distance and abs(x) + abs(y) > 0:
-                min_distance = abs(x) + abs(y)
+            distance = abs(x) + abs(y)
+            if distance < min_distance and distance > 0:
+                min_distance = distance
     return min_distance
 
 def parse_step(s):
