@@ -1,24 +1,24 @@
 import re
 
-def remove_invalid_passwords(l):
+def remove_invalid_passwords(passwords):
     valid = 0
-    for i in l:
-        first_p = int(i[0]) - 1
-        second_p = int(i[1]) - 1
-        char = i[2]
-        password = i[3]
+    for entry in passwords:
+        first_p = int(entry[0]) - 1
+        second_p = int(entry[1]) - 1
+        char = entry[2]
+        password = entry[3]
         if (password[first_p] == char) ^ (password[second_p] == char):
             valid += 1
     return valid
 
 def main():
-    l = []
+    passwords = []
     while True:
         try:
-            l.append(re.split(' |-|: ', input()))
+            passwords.append(re.split(' |-|: ', input()))
         except EOFError: 
             break
-    print(remove_invalid_passwords(l))
+    print(remove_invalid_passwords(passwords))
 
 if __name__ == "__main__":
     main()

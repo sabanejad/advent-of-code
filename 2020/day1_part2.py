@@ -2,7 +2,10 @@ from itertools import combinations
 
 def adds_to_sum(s, n):
     while True:
-        elem = s.pop()
+        try:
+            elem = s.pop()
+        except IndexError:
+            raise ValueError('invalid input')
         for a, b in combinations(s, 2):
             if a + b + elem == n:
                 return elem * a * b

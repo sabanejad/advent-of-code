@@ -1,9 +1,12 @@
 def adds_to_sum(s, n):
     while True:
-        elem = s.pop()
-        for i in s: 
-            if elem + i == n:
-                return i * elem
+        try:
+            elem = s.pop()
+        except IndexError:
+            raise ValueError('invalid input')
+        delta = n - elem
+        if delta in s:
+            return delta * elem
 
 def main():
     s = set()

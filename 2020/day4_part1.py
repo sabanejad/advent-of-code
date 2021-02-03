@@ -3,9 +3,10 @@ def find_valid_passports(passports, valid):
     for passport in passports:
         valid_num = 0
         for item in passport:
-            if item[0:3] in valid:
+            code, _ = item.split(':', 1)
+            if code in valid:
                 valid_num += 1
-        if valid_num == 7:
+        if valid_num == len(valid):
             valid_passport_count += 1
     return valid_passport_count
 
