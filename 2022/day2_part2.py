@@ -1,33 +1,43 @@
 import sys
-import numpy
-import string
 
-from itertools import zip_longest
+def calculate_score(outcome, my_move):
+    if outcome == 'win': score = 6
+    if outcome == 'draw': score = 3
+    if outcome == 'lose': score = 0
+    if my_move == 'rock': score += 1
+    if my_move == 'paper': score += 2
+    if my_move == 'scissors': score += 3
+    return score
 
-def find_priority(ch):
-    keys = list(string.ascii_letters)
-    values = list(numpy.arange(1, 53))
-    d = dict(zip_longest(keys, values))
-    return d[ch]
+def pick_move(opponent, outcome):
+    if outcome == 'draw': return opponent
+    if opponent == 'rock':
+        if outcome == 'lose': return 'scissors'
+        elif outcome == 'win': return 'paper'
+    if opponent == 'paper':
+        if outcome == 'lose': return 'rock'
+        elif outcome == 'win': return 'scissors'
+    if opponent == 'scissors':
+        if outcome == 'lose': return 'paper'
+        elif outcome == 'win': return 'rock'
 
-def find_common(l):
-    return (set(l[0]).intersection(set(l[1]))).intersection(l[2]).pop()
+def translate(s1, s2):
+    if s1 == 'A': opponent = 'rock'
+    if s1 == 'B': opponent = 'paper'
+    if s1 == 'C': opponent = 'scissors'
+    if s2 == 'X': outcome = 'lose'
+    if s2 == 'Y': outcome = 'draw'
+    if s2 == 'Z': outcome = 'win'
+    return opponent, outcome
 
 def main():
-    sum = 0
-    groups = []
-    for s in sys.stdin:
-        if len(groups) >= 3:
-            common = find_common(groups)
-            sum += find_priority(common)
-            groups = []
-            groups.append(s.strip())
-        else:
-            groups.append(s.strip())
-    if len(groups) >= 3:
-        common = find_common(groups)
-        sum += find_priority(common)
-    print(sum)
+    score = 0
+    for line in sys.stdin:
+        s1, s2 = line.split()
+        opponent, outcome = translate(s1, s2)
+        my_move = pick_move(opponent, outcome)
+        score += calculate_score(outcome, my_move)
+    print(score)
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
