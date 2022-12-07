@@ -27,9 +27,8 @@ def make_moves(piles, moves):
     for m in moves:
         how_many, from_pile, to_pile = m
         for n in range(how_many):
-            if piles[from_pile] != []:
-                element = piles[from_pile].pop()
-                piles[to_pile].append(element)
+            element = piles[from_pile].pop()
+            piles[to_pile].append(element)
     return piles
 
 def get_final_string(piles):
