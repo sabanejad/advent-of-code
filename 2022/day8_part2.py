@@ -30,7 +30,6 @@ def get_scenic_score(a, b, width, height, map):
     x, y = a-1, b
     while x >= 0:
         if map[x, y] >= map[a, b] or x == 0:
-            # up = a - x
             break
         x -= 1
     left = a - x
