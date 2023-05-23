@@ -8,7 +8,7 @@ min_x = 494 # assuming from looking at input, make this programmatic
 max_x = 503
 min_y = 0
 max_y = 10
-num_sand_drops = 5
+num_sand_drops = 24
 
 
 def read_input():
@@ -51,7 +51,7 @@ def print_board():
 
 def drop_sand(x=x_entry, y=y_entry):
     # (x, y) is where the grain is, (~x, y+1) is where it's going
-    # base case
+    if x < min_x or x > max_x or y > max_y: return 'overflow'
     if (x, y+1) in board and (x-1, y+1) in board and (x+1, y+1) in board: board[x, y] = 'o'
     elif (x, y+1) in board and (x-1, y+1) in board and (x+1, y+1) not in board: drop_sand(x+1, y+1)
     elif (x, y+1) in board and (x-1, y+1) not in board: drop_sand(x-1, y+1)
@@ -70,10 +70,18 @@ def drop_sand(x=x_entry, y=y_entry):
 def main():
     read_input()
     fill_board()
-    print_board()
-    for i in range(num_sand_drops):
-        drop_sand()
-        print_board()
+    num_sands = 0
+    # s = drop_sand(x=492, y=2)
+    # print(s)
+    while True:
+        s = drop_sand()
+        if s == 'overflow':
+            print(num_sands)
+            break
+        num_sands += 1
+    # for i in range(num_sand_drops):
+    #     drop_sand()
+    #     print_board()
 
 
 if __name__ == '__main__':
