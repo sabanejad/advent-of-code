@@ -4,11 +4,11 @@ coors = []
 board = {}
 entry_point = (500, 0)
 x_entry, y_entry = entry_point
-min_x = 494 # assuming from looking at input, make this programmatic
-max_x = 503
+min_x = 493 # assuming from looking at input, make this programmatic
+max_x = 506
 min_y = 0
 max_y = 10
-num_sand_drops = 24
+num_sand_drops = 45
 
 
 def read_input():
@@ -51,37 +51,32 @@ def print_board():
 
 def drop_sand(x=x_entry, y=y_entry):
     # (x, y) is where the grain is, (~x, y+1) is where it's going
-    if x < min_x or x > max_x or y > max_y: return 'overflow'
-    if (x, y+1) in board and (x-1, y+1) in board and (x+1, y+1) in board: board[x, y] = 'o'
-    elif (x, y+1) in board and (x-1, y+1) in board and (x+1, y+1) not in board: drop_sand(x+1, y+1)
-    elif (x, y+1) in board and (x-1, y+1) not in board: drop_sand(x-1, y+1)
+    if x == min_x or x == max_x or y == max_y: return 'overflow'
+        # board[x, y] = '~'
+    # if x < min_x or x > max_x or y > max_y
     elif (x, y+1) not in board: drop_sand(x, y+1)
-    # for y in range(y_entry, max_y):
-    #     if (x_entry, y) not in board: continue
-    #     # can't go any lower
-    #     elif board[x_entry, y] == '#' or board[x_entry, y] == 'o':
-    #         # down and left
-    #         if (x_entry-1, y) not in board: board[x_entry-1, y] = 'o'
-    #         # down and right
-    #         elif (x_entry+1, y) not in board: board[x_entry+1, y] = 'o'
-    #         else: board[x_entry, y-1] = 'o'
+    elif (x-1, y+1) not in board: drop_sand(x-1, y+1)
+    elif (x+1, y+1) not in board: drop_sand(x+1, y+1)
+    else: board[x, y] = 'o'
 
 
 def main():
     read_input()
     fill_board()
-    num_sands = 0
+    num_sands = 1
     # s = drop_sand(x=492, y=2)
     # print(s)
-    while True:
-        s = drop_sand()
-        if s == 'overflow':
-            print(num_sands)
-            break
+    # while True:
+    #     s = drop_sand()
+    #     if s == 'overflow':
+    #         print(num_sands)
+    #         break
+    #     num_sands += 1
+    for i in range(num_sand_drops):
+        print(num_sands)
+        print(drop_sand())
         num_sands += 1
-    # for i in range(num_sand_drops):
-    #     drop_sand()
-    #     print_board()
+        print_board()
 
 
 if __name__ == '__main__':
